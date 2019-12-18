@@ -1,34 +1,26 @@
-import * as express from "express";
-import * as socketio from "socket.io";
-import * as path from "path";
+import * as express from 'express';
+import * as socketio from 'socket.io';
+import * as path from 'path';
+
+import ServerController from './controllers/ServerController'
+
+const port = 3000;
 
 const app = express();
-app.set("port", process.env.PORT || 3000);
+app.set('port', process.env.PORT || port);
 
-let http = require("http").Server(app);
+let http = require('http').Server(app);
 // set up socket.io and bind it to our
 // http server.
-let io = require("socket.io")(http);
+let io = require('socket.io')(http);
 
-// app.get("/", (req: any, res: any) => {
-//   res.sendFile(path.resolve("./client/index.html"));
-// });
+const serverController = new ServerController();
 
-// whenever a user connects on port 3000 via
-// a websocket, log that a user has connected
-io.on("connection", function(socket: any) {
-  console.log("a user connected");
-  socket.on("message", function(message: any) {
-    console.log(message);
-  });
-  socket.on("test", function(message: any) {
-    console.log("TEST DU TEST : "+message);
-  });
-  socket.on("getId", ()=> {
-    socket.emit('sendId',socket.id)
-  });
+io.on('connection', function(socket: any) {
+  console.log('User : ' + socket.id + ' connected.');
+  serverController.initializeSocket(io,socket);
 });
 
-const server = http.listen(3000, function() {
-  console.log("listening on *:3000");
+const server = http.listen(port, function() {
+  console.log('listening on *:'+port);
 });

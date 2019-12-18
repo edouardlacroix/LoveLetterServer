@@ -2,7 +2,7 @@
   "name": "LoveLetterServer",
   "version": "1.0.0",
   "description": "The digital version of the physical game.",
-  "main": "src/server.js",
+  "main": "dist/server.js",
   "repository": "https://github.com/edouardlacroix/LoveLetterServer.git",
   "author": "edouard.lacroix1@gmail.com",
   "license": "MIT",
@@ -14,6 +14,7 @@
     "nodemon": "^2.0.2",
     "socket.io": "^2.3.0"
   },
+ 
   "scripts": {
     "build": "tsc",
     "watch-ts": "tsc -w",
