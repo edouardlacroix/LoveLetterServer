@@ -1,4 +1,5 @@
 import socketRouteList from '../enums/socketRoute'
+import Deck from '../class/Deck'
 
 class ServerController {
   public initializeSocket(io:any, socket: any): void {
@@ -6,8 +7,7 @@ class ServerController {
       console.log(message);
     });
     socket.on(socketRouteList.TEST, function(message: any) {
-      console.log('TEST DU TEST : ' + message);
-      console.log(io)
+      let deck = new Deck();
     });
     socket.on(socketRouteList.GET_ID, () => {
       socket.emit(socketRouteList.SEND_ID, socket.id);

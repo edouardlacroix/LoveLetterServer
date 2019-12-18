@@ -1,10 +1,12 @@
 import Card from './Card'
 import CardsDescription from '../enums/cardsDescription';
+import Utils from '../utils/utils'
 
 export default class Deck{
     private cardsList:Array<Card>
 
     constructor(){
+        this.cardsList = []
         // SPY
         this.cardsList.push(new Card('spy01',CardsDescription.SPY));
         this.cardsList.push(new Card('spy02',CardsDescription.SPY));
@@ -36,6 +38,8 @@ export default class Deck{
         // PRINCESS ❤
         this.cardsList.push(new Card('princess01',CardsDescription.PRINCESS));
 
+        // this.cardsList = Utils.shuffleArray(this.cardsList);
+        // console.log(this.cardsList);
         // TODO Shuffle
     }
 }
