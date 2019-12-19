@@ -16,6 +16,7 @@ export default class PlayerService {
     player.discardCard(card);
     // TODO
 
+    card.getAction().resolveAction();
     // card.action.resolveAction(player:Player, targetPlayer:player, deck:Deck);
   }
 }

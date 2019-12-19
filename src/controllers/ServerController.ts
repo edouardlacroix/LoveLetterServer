@@ -6,13 +6,13 @@ class ServerController {
     socket.on('message', function(message: any) {
       console.log(message);
     });
-    socket.on(socketRouteList.TEST, function(message: any) {
-      let deck = new Deck();
-      socket.emit('sendDeck', deck);
-    });
-    socket.on(socketRouteList.GET_ID, () => {
-      socket.emit(socketRouteList.SEND_ID, socket.id);
-    });
+    // socket.on(socketRouteList.TEST, function(message: any) {
+    //   let deck = new Deck();
+    //   socket.emit('sendDeck', deck);
+    // });
+    // socket.on(socketRouteList.GET_ID, () => {
+    //   socket.emit(socketRouteList.SEND_ID, socket.id);
+    // });
   }
 }
 
