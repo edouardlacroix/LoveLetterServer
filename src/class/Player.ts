@@ -19,6 +19,10 @@ export default class Player {
   }
 
   // ===============   GETTER  =====================
+  public getId(): string {
+    return this.id;
+  }
+
   public getCardsInHand(): Array<Card> {
     return this.cardsInHand;
   }
@@ -54,6 +58,10 @@ export default class Player {
 
   public setPlayerActivity(state: boolean): void {
     this.isActive = state;
+  }
+
+  public setName(name: string): void {
+    this.name = name;
   }
 
   // ===============   UTILS  =====================

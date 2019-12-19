@@ -5,32 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" type="text/css" href="style.css" />
-
     <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
   </head>
 
   <body>
-    <button onClick="sendTest()">Test</button>
-
     <button onClick="getId()">Get Player ID</button>
+    <button onClick="setName()">Set Name</button>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
     <script>
       const socket = io('http://localhost:3000');
 
-      function sendTest() {
-        socket.emit('TEST', 'POUET POUET POUET');
-      }
-
       function getId() {
-        socket.emit('GET_ID');
+        socket.emit('REQUEST_PLAYER_DATA');
       }
 
-      socket.on('sendDeck', data => {
+      function setName() {
+        socket.emit('SET_PLAYER_NAME', 'New name');
+      }
+
+      socket.on('SEND_PLAYER_DATA', data => {
         console.log(data);
-      });
-      socket.on('SEND_ID', function(data) {
-        alert('ID ' + data);
       });
     </script>
   </body>

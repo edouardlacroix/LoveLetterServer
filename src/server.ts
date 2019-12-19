@@ -21,8 +21,7 @@ const boardController = new BoardController();
 io.on('connection', function(socket: any) {
   console.log('User : ' + socket.id + ' connected.');
   serverController.initializeSocket(io, socket);
-  boardController.addPlayer(io, socket);
-  // console.log(boardController)
+  boardController.initializeBoardForPlayer(io, socket);
 });
 
 const server = http.listen(port, function() {
