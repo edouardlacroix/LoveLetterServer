@@ -1,38 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>Document</title>
-</head>
+    <title>Document</title>
+  </head>
 
-<body>
-  <button onClick="sendTest()">Test</button>
+  <body>
+    <button onClick="sendTest()">Test</button>
 
-  <button onClick="getId()">Get Player ID</button>
+    <button onClick="getId()">Get Player ID</button>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+    <script>
+      const socket = io('http://localhost:3000');
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
-  <script>
-    const socket = io('http://localhost:3000');
+      function sendTest() {
+        socket.emit('TEST', 'POUET POUET POUET');
+      }
 
-    function sendTest() {
-      socket.emit('TEST', 'POUET POUET POUET');
-    }
+      function getId() {
+        socket.emit('GET_ID');
+      }
 
-    function getId() {
-      socket.emit('GET_ID');
-    }
-
-    socket.on('sendDeck', (data) => {
-      console.log(data)
-    });
-    socket.on('SEND_ID', function (data) {
-      alert('ID ' + data);
-    });
-  </script>
-</body>
-
+      socket.on('sendDeck', data => {
+        console.log(data);
+      });
+      socket.on('SEND_ID', function(data) {
+        alert('ID ' + data);
+      });
+    </script>
+  </body>
 </html>

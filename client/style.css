@@ -1,0 +1,17 @@
+body {
+  background-image: url('https://i.ytimg.com/vi/LgtRqwfJGbI/maxresdefault.jpg');
+  background-size: cover;
+}
+
+button {
+  width: 100px;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: grey;
+  color: white;
+}
