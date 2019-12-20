@@ -34,9 +34,9 @@ class BoardController {
     });
     socket.on(socketRouteList.SET_PLAYER_NAME, (data: string) => {
       this.boardService.getPlayerById(socket.id, this.board).setName(data);
-      socket.emit(
-        socketRouteList.SEND_PLAYER_DATA,
-        this.boardService.getPlayerById(socket.id, this.board)
+      io.emit(
+        socketRouteList.SEND_ALL_PLAYERS_DATA,
+        this.boardService.getAllPlayersData(this.board)
       );
     });
   }
