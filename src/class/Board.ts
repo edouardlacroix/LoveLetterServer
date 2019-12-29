@@ -14,6 +14,15 @@ export default class Board {
     this.players.push(player);
   }
 
+  public removePlayerById(id: String): void {
+    this.players.map(item => {
+      if (item.getId() === id) {
+        this.players.splice(
+          this.players.indexOf(item), 1)
+      }
+    })
+  }
+
   public getPlayers(): Array<Player> {
     return this.players;
   }

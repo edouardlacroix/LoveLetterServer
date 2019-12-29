@@ -25,6 +25,11 @@ class BoardController {
     }
   }
 
+  public removePlayer(io: any, socket: any): void {
+    this.board.removePlayerById(socket.id);
+
+  }
+
   public initializeBoardSocket(io: any, socket: any): void {
     socket.on(socketRouteList.REQUEST_PLAYER_DATA, () => {
       socket.emit(
@@ -32,13 +37,23 @@ class BoardController {
         this.boardService.getPlayerById(socket.id, this.board)
       );
     });
+    socket.on(socketRouteList.UPDATE_GAME_DATA_REFRESH, () =>
+      io.emit(socketRouteList.UPDATE_GAME_DATA, this.boardService.getGameUpdatedData(this.board))
+    )
+
+    // DISCONNECTION OF PLAYER
+    socket.on(socketRouteList.DISCONNECT_SELF, () => {
+      this.removePlayer(io, socket);
+      console.log('DISCONNECT_SELF = ' + socket.id)
+      io.emit(socketRouteList.UPDATE_GAME_DATA, this.boardService.getGameUpdatedData(this.board));
+    })
+
     socket.on(socketRouteList.SET_PLAYER_NAME, (data: string) => {
       this.boardService.getPlayerById(socket.id, this.board).setName(data);
-      io.emit(
-        socketRouteList.SEND_ALL_PLAYERS_DATA,
-        this.boardService.getAllPlayersData(this.board)
-      );
+      io.emit(socketRouteList.UPDATE_GAME_DATA, this.boardService.getGameUpdatedData(this.board))
     });
+
+    io.emit(socketRouteList.UPDATE_GAME_DATA, this.boardService.getGameUpdatedData(this.board))
   }
 
   //  ============      GETTER   =============
