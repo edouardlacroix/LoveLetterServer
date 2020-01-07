@@ -27,9 +27,17 @@ class BoardController {
 
   public removePlayer(io: any, socket: any): void {
     this.board.removePlayerById(socket.id);
-
   }
 
+  // MAIN UPDATE DISPATCH
+  public dispatchUpdateData(io: any, socket: any): void {
+    io.emit(
+      socketRouteList.UPDATE_GAME_DATA,
+      this.boardService.getGameUpdatedData(this.board)
+    );
+  }
+
+  // --------------------                INIT BOARD SOCKET LISTENER   -----------------------------------
   public initializeBoardSocket(io: any, socket: any): void {
     socket.on(socketRouteList.REQUEST_PLAYER_DATA, () => {
       socket.emit(
@@ -38,22 +46,37 @@ class BoardController {
       );
     });
     socket.on(socketRouteList.UPDATE_GAME_DATA_REFRESH, () =>
-      io.emit(socketRouteList.UPDATE_GAME_DATA, this.boardService.getGameUpdatedData(this.board))
-    )
+      io.emit(
+        socketRouteList.UPDATE_GAME_DATA,
+        this.boardService.getGameUpdatedData(this.board)
+      )
+    );
 
     // DISCONNECTION OF PLAYER
     socket.on(socketRouteList.DISCONNECT_SELF, () => {
+      console.log('DISCONNECT_SELF = ' + socket.id);
       this.removePlayer(io, socket);
-      console.log('DISCONNECT_SELF = ' + socket.id)
-      io.emit(socketRouteList.UPDATE_GAME_DATA, this.boardService.getGameUpdatedData(this.board));
-    })
-
-    socket.on(socketRouteList.SET_PLAYER_NAME, (data: string) => {
-      this.boardService.getPlayerById(socket.id, this.board).setName(data);
-      io.emit(socketRouteList.UPDATE_GAME_DATA, this.boardService.getGameUpdatedData(this.board))
+      io.emit(
+        socketRouteList.UPDATE_GAME_DATA,
+        this.boardService.getGameUpdatedData(this.board)
+      );
     });
 
-    io.emit(socketRouteList.UPDATE_GAME_DATA, this.boardService.getGameUpdatedData(this.board))
+    // SET PLAYER NAME
+    socket.on(socketRouteList.SET_PLAYER_NAME, (data: string) => {
+      this.boardService.getPlayerById(socket.id, this.board).setName(data);
+      io.emit(
+        socketRouteList.UPDATE_GAME_DATA,
+        this.boardService.getGameUpdatedData(this.board)
+      );
+    });
+
+    // ON PLAY CARD
+    socket.on(socketRouteList.PLAY_CARD, (data: string) => {
+      console.log(data.id);
+    });
+
+    this.dispatchUpdateData(io, socket);
   }
 
   //  ============      GETTER   =============
