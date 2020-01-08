@@ -1,5 +1,4 @@
 import socketRouteList from '../enums/socketRoute';
-import Deck from '../class/Deck';
 import Board from '../class/Board';
 import Player from '../class/Player';
 import BoardService from '../services/BoardService';
@@ -39,17 +38,8 @@ class BoardController {
 
   // --------------------                INIT BOARD SOCKET LISTENER   -----------------------------------
   public initializeBoardSocket(io: any, socket: any): void {
-    socket.on(socketRouteList.REQUEST_PLAYER_DATA, () => {
-      socket.emit(
-        socketRouteList.SEND_PLAYER_DATA,
-        this.boardService.getPlayerById(socket.id, this.board)
-      );
-    });
     socket.on(socketRouteList.UPDATE_GAME_DATA_REFRESH, () =>
-      io.emit(
-        socketRouteList.UPDATE_GAME_DATA,
-        this.boardService.getGameUpdatedData(this.board)
-      )
+      this.dispatchUpdateData(io, socket)
     );
 
     // DISCONNECTION OF PLAYER
@@ -74,6 +64,7 @@ class BoardController {
     // ON PLAY CARD
     socket.on(socketRouteList.PLAY_CARD, (data: string) => {
       console.log(data.id);
+      socket.emit(socketRouteList.YOUR_TURN);
     });
 
     this.dispatchUpdateData(io, socket);

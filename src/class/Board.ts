@@ -17,14 +17,17 @@ export default class Board {
   public removePlayerById(id: String): void {
     this.players.map(item => {
       if (item.getId() === id) {
-        this.players.splice(
-          this.players.indexOf(item), 1)
+        this.players.splice(this.players.indexOf(item), 1);
       }
-    })
+    });
   }
 
   public getPlayers(): Array<Player> {
     return this.players;
+  }
+
+  public getPlayerById(id: String): Player {
+    return this.players.filter(item => item.getId() === id)[0];
   }
 
   public setPlayers(players: Array<Player>): void {
