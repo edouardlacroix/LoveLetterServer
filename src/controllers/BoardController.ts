@@ -32,11 +32,18 @@ class BoardController {
   public dispatchUpdateData(io: any, socket: any): void {
     io.emit(
       socketRouteList.UPDATE_GAME_DATA,
-      this.boardService.getGameUpdatedData(this.board)
+      this.boardService.getGameUpdatedData(this.board, socket.id)
     );
   }
 
-  // --------------------                INIT BOARD SOCKET LISTENER   -----------------------------------
+  public sendCardsToPlayer(socket: any): void {
+    socket.emit(
+      socketRouteList.SEND_PLAYER_CARD,
+      this.board.getPlayerById(socket.id).getCardsInHand()
+    );
+  }
+
+  // --------------------                INIT BOARD SOCKET LISTENER AND EMITER               -----------------------------------
   public initializeBoardSocket(io: any, socket: any): void {
     socket.on(socketRouteList.UPDATE_GAME_DATA_REFRESH, () =>
       this.dispatchUpdateData(io, socket)
@@ -46,25 +53,20 @@ class BoardController {
     socket.on(socketRouteList.DISCONNECT_SELF, () => {
       console.log('DISCONNECT_SELF = ' + socket.id);
       this.removePlayer(io, socket);
-      io.emit(
-        socketRouteList.UPDATE_GAME_DATA,
-        this.boardService.getGameUpdatedData(this.board)
-      );
+      this.dispatchUpdateData(io, socket);
     });
 
     // SET PLAYER NAME
     socket.on(socketRouteList.SET_PLAYER_NAME, (data: string) => {
       this.boardService.getPlayerById(socket.id, this.board).setName(data);
-      io.emit(
-        socketRouteList.UPDATE_GAME_DATA,
-        this.boardService.getGameUpdatedData(this.board)
-      );
+      this.dispatchUpdateData(io, socket);
     });
 
     // ON PLAY CARD
-    socket.on(socketRouteList.PLAY_CARD, (data: string) => {
+    socket.on(socketRouteList.PLAY_CARD, data => {
       console.log(data.id);
-      socket.emit(socketRouteList.YOUR_TURN);
+      this.board.getPlayerById(socket.id).getCardInHandById(data.id);
+      this.sendCardsToPlayer(socket);
     });
 
     this.dispatchUpdateData(io, socket);

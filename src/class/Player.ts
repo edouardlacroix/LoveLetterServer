@@ -73,4 +73,8 @@ export default class Player {
     let localCard = this.cardsInHand.splice(this.cardsInHand.indexOf(card), 1);
     this.cardsPlayed.push(localCard[0]);
   }
+
+  public getCardInHandById(cardId: String): Card {
+    return this.cardsInHand.filter(item => item.getId() === cardId)[0];
+  }
 }
