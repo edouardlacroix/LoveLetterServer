@@ -10,12 +10,15 @@ export default class BoardService {
   }
 
   public getGameUpdatedData(board: Board, playerId: String): Array<Object> {
+    let gameData = [];
     let tempArray = [];
     board.getPlayers().map(item => tempArray.push(item));
     tempArray.map(item => {
       delete item.cardsInHand;
     });
+    gameData.push(tempArray);
+    gameData.push({ cardsLeft: board.getDeck().getDeck().length });
     console.log('UPDATE GAME DISPATCH');
-    return tempArray;
+    return gameData;
   }
 }

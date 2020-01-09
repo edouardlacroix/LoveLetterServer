@@ -16,6 +16,7 @@ export default class Deck {
     this.cardsList.push(new Card('guard03', CardsDescription.GUARD));
     this.cardsList.push(new Card('guard04', CardsDescription.GUARD));
     this.cardsList.push(new Card('guard05', CardsDescription.GUARD));
+    this.cardsList.push(new Card('guard06', CardsDescription.GUARD));
     // PRIESTS
     this.cardsList.push(new Card('priest01', CardsDescription.PRIEST));
     this.cardsList.push(new Card('priest02', CardsDescription.PRIEST));
