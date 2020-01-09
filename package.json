@@ -18,6 +18,7 @@
     "socket.io": "^2.3.0"
   },
   "scripts": {
+    "start": "node build/index.js",
     "build": "tsc",
     "watch-ts": "tsc -w",
     "watch-node": "nodemon dist/server.js",
