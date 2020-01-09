@@ -18,10 +18,10 @@
     "socket.io": "^2.3.0"
   },
   "scripts": {
-    "start": "node build/index.js",
+    "start": "node dist/index.js",
     "build": "tsc",
-    "postinstall": "tsc",
     "tsc": "tsc",
+    "postinstall": "npm run tsc",
     "watch-ts": "tsc -w",
     "watch-node": "nodemon dist/server.js",
     "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript, Node\" -c \"yello.bold, cyan.bold\" \"yarn run watch-ts\" \"yarn run watch-node\"",
