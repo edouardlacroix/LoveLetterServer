@@ -20,7 +20,7 @@
   "scripts": {
     "start": "node build/index.js",
     "build": "tsc",
-    "postinstall": "npm run tsc",
+    "postinstall": "tsc",
     "tsc": "tsc",
     "watch-ts": "tsc -w",
     "watch-node": "nodemon dist/server.js",
