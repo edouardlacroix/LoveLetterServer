@@ -15,8 +15,7 @@ app.use(cors());
 let http = require('http').Server(app);
 // set up socket.io and bind it to our
 // http server.
-let io = require('socket.io')(http);
-io.set('origins', '*:*');
+let io = require('socket.io')(http, { origins: '*:*' });
 
 const serverController = new ServerController();
 const boardController = new BoardController();
