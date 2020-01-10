@@ -26,6 +26,6 @@ io.on('connection', function(socket: any) {
   boardController.initializeBoardForPlayer(io, socket);
 });
 
-const server = http.listen(port, function() {
+http.listen(port, function() {
   console.log('listening on *:' + port);
 });
