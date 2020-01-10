@@ -69,11 +69,15 @@ export default class Player {
     this.cardsInHand.push(card);
   }
 
-  public discardCard(card: Card): void {
-    let localCard = this.cardsInHand.splice(this.cardsInHand.indexOf(card), 1);
-    this.cardsPlayed.push(localCard[0]);
+  public removeCardFromHand(card: Card): Card {
+    return this.cardsInHand.splice(this.cardsInHand.indexOf(card), 1)[0];
   }
 
+  public discardCard(card: Card): void {
+    this.cardsPlayed.push(this.removeCardFromHand(card));
+  }
+
+  // TODO MOVE TO SERVICE
   public getCardInHandById(cardId: String): Card {
     return this.cardsInHand.filter(item => item.getId() === cardId)[0];
   }

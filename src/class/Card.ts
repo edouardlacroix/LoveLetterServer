@@ -49,6 +49,7 @@ export default class Card {
   }
 
   public getAction(): AbstractAction {
+    // this.action;
     return this.action;
   }
 

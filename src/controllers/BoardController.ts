@@ -63,9 +63,10 @@ class BoardController {
     });
 
     // ON PLAY CARD
-    socket.on(socketRouteList.PLAY_CARD, data => {
-      console.log(data.id);
-      this.board.getPlayerById(socket.id).getCardInHandById(data.id);
+    socket.on(socketRouteList.PLAY_CARD, (data: string): void => {
+      let JSONdata = JSON.parse(data);
+      console.log(JSONdata.id);
+      this.board.getPlayerById(socket.id).getCardInHandById(JSONdata.id);
       this.sendCardsToPlayer(socket);
     });
 

@@ -3,10 +3,12 @@ import Deck from 'class/Deck';
 import DeckService from './DeckService';
 import CardService from './CardService';
 import Card from 'class/Card';
+import Board from 'class/Board';
+import AbstractActionData from 'class/CardsEffects/Actions/AbstractActionData';
 
 export default class PlayerService {
   deckService: DeckService = new DeckService();
-  cardService: CardService = new CardService();
+  // cardService: CardService = new CardService();
 
   public getCard(player: Player, deck: Deck): void {
     this.deckService.drawCard(deck, 1).map(item => player.addCard(item));
@@ -16,7 +18,8 @@ export default class PlayerService {
     player.discardCard(card);
     // TODO
 
-    card.getAction().resolveAction();
-    // card.action.resolveAction(player:Player, targetPlayer:player, deck:Deck);
+    let targetPlayer = null;
+
+    // card.getAction().resolveAction( board:Board,player:Player, data:AbstractActionData);
   }
 }

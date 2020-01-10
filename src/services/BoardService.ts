@@ -1,4 +1,5 @@
 import Board from '../class/Board';
+import Player from 'class/Player';
 
 export default class BoardService {
   public getPlayerById(id: string, board: Board) {
@@ -10,11 +11,11 @@ export default class BoardService {
   }
 
   public getGameUpdatedData(board: Board, playerId: String): Array<Object> {
-    let gameData = [];
-    let tempArray = [];
-    board.getPlayers().map(item => tempArray.push(item));
-    tempArray.map(item => {
-      delete item.cardsInHand;
+    let gameData: Array<Object> = [];
+    let tempArray: Array<Object> = [];
+    board.getPlayers().map(item => tempArray.push(Object.assign(item)));
+    tempArray.map((item: Player): void => {
+      delete item.getCardsInHand;
     });
     gameData.push(tempArray);
     gameData.push({ cardsLeft: board.getDeck().getDeck().length });
