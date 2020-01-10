@@ -12,21 +12,21 @@ const app = express();
 app.set('port', process.env.PORT || port);
 app.use(cors());
 
-
 let http = require('http').Server(app);
 // set up socket.io and bind it to our
 // http server.
 let io = require('socket.io')(http);
+io.set('origins', '*:*');
 
 const serverController = new ServerController();
 const boardController = new BoardController();
 
-io.on('connection', function (socket: any) {
+io.on('connection', function(socket: any) {
   console.log('User : ' + socket.id + ' connected.');
   serverController.initializeSocket(io, socket);
   boardController.initializeBoardForPlayer(io, socket);
 });
 
-const server = http.listen(port, function () {
+const server = http.listen(port, function() {
   console.log('listening on *:' + port);
 });
