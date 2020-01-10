@@ -56,6 +56,11 @@ class BoardController {
       this.dispatchUpdateData(io, socket);
     });
 
+    socket.on('disconnect', () => {
+      this.removePlayer(io, socket);
+      this.dispatchUpdateData(io, socket);
+    });
+
     // SET PLAYER NAME
     socket.on(socketRouteList.SET_PLAYER_NAME, (data: string) => {
       this.boardService.getPlayerById(socket.id, this.board).setName(data);
