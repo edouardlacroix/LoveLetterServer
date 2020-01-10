@@ -5,17 +5,17 @@ import * as cors from 'cors';
 
 import ServerController from './controllers/ServerController';
 import BoardController from './controllers/BoardController';
+import { listenerCount } from 'cluster';
 
-const port = 3000;
+const PORT = process.env.PORT || 3000;
 
 const app = express();
-app.set('port', process.env.PORT || port);
 app.use(cors());
 
-let http = require('http').Server(app);
-// set up socket.io and bind it to our
-// http server.
-let io = require('socket.io')(http, { origins: '*:*' });
+let server = require('http').Server(app);
+
+// let io = require('socket.io')(app, { origins: '*:*' });
+let io = require('socket.io').listen(server);
 
 const serverController = new ServerController();
 const boardController = new BoardController();
@@ -26,6 +26,6 @@ io.on('connection', function(socket: any) {
   boardController.initializeBoardForPlayer(io, socket);
 });
 
-http.listen(port, function() {
-  console.log('listening on *:' + port);
+server.listen(PORT, function() {
+  console.log(`listening on *: ${PORT}`);
 });
