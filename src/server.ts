@@ -12,7 +12,13 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(cors());
 
+// Default Get, will be used to avoid displaying en error if someone tries to open the link
+app.get('',  function(req, res) {
+  res.send('The server is running correctly.');
+});
+
 let server = require('http').Server(app);
+
 
 // let io = require('socket.io')(app, { origins: '*:*' });
 let io = require('socket.io').listen(server);
