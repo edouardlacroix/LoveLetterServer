@@ -12,6 +12,8 @@
             - IF : Ask choosen card
 
 
+Trello : https://trello.com/b/abG3JB3Y/love-letter
+
 
 # TODO
 - Player deco/keep alive
